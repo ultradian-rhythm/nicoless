@@ -35,6 +35,12 @@ div.wrapper {
     border-radius: 5px;
 }
 
+div.tender {
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+
 figure {
     width: 100%;
     margin: 0;
