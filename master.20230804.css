@@ -12,7 +12,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background-color: #DDDEDD;
     text-align: center;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -35,12 +35,6 @@ div.wrapper {
     border-radius: 5px;
 }
 
-div.tender {
-    display: inline-block;
-    margin: 0 auto;
-    padding-top: 100px;
-}
-
 figure {
     width: 100%;
     margin: 0;
@@ -54,24 +48,9 @@ figure img {
 }
 
 figcaption {
-    padding: 2em 1em;
-    font-size: 0.9em;
+    padding: 1em;
     line-height: 1.25em;
-    color: #999;
-}
-
-figcaption img {
-    width: 50%;
-    margin-bottom: 1em;
-}
-
-figcaption strong {
-    display: inline-block;
-    padding-top: 0.5em;
-    text-transform: uppercase;
-    font-weight: normal;
-    font-style: italic;
-    color: #fff;
+    color: #97A69E;
 }
 
 ul {
@@ -121,7 +100,7 @@ li a em {
 li a:hover em {
     background-color: #fff;
     border-color: #fff;
-    color: #333;
+    color: #DADBDA;
 }
 
 a {
