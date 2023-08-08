@@ -25,14 +25,13 @@ h1 {
 
 div.page {
     padding: 6%;
-    background-color: #DBDCDB;
 }
 
 div.wrapper {
     min-width: 320px;
     max-width: 640px;
     margin: 0 auto;
-    backdrop-filter: blur(50px);
+    /* backdrop-filter: blur(50px); */
 }
 
 figure {
