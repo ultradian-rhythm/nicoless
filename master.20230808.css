@@ -4,12 +4,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-    height: 100%;
-}
-
 body {
-    height: 100%;
     margin: 0;
     padding: 0;
     background-color: #DDDEDD;
@@ -38,15 +33,6 @@ div.wrapper {
     max-width: 640px;
     margin: 0 auto;
     backdrop-filter: blur(50px);
-}
-
-p.contact {
-    max-width: 640px;
-    margin: 1.5em auto 100px auto;
-    font-family: Bilbo, sans-serif;
-    font-style: italic;
-    font-size: 1.5em;
-    line-height: 1em;
 }
 
 figure {
@@ -123,4 +109,13 @@ li a:hover img.play {
 a {
     text-decoration: underline;
     color: inherit;
+}
+
+p.contact {
+    max-width: 640px;
+    margin: 1.5em auto 100px auto;
+    font-family: Bilbo, sans-serif;
+    font-style: italic;
+    font-size: 1.5em;
+    line-height: 1em;
 }
