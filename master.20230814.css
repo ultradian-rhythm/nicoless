@@ -31,7 +31,6 @@ div.wrapper {
     min-width: 320px;
     max-width: 640px;
     margin: 0 auto;
-    /* backdrop-filter: blur(50px); */
 }
 
 figure {
@@ -53,8 +52,8 @@ figcaption {
 }
 
 ul {
-    margin: 0 auto;
-    padding: 0;
+    margin: 16% auto 0 auto;
+    padding: 0 10%;
     list-style: none;
 }
 
@@ -64,6 +63,9 @@ li {
     border-top: 1px solid #ccc;
     white-space: nowrap;
     text-align: left;
+    font-family: Bilbo, sans-serif;
+    font-size: 1.5em;
+    font-weight: 600;
 }
 
 li:first-child {
@@ -76,8 +78,6 @@ li a {
     display: block;
     width: 100%;
     text-decoration: none;
-    opacity: 0.8;
-    transition: all 200ms;
 }
 
 li a:hover {
@@ -89,6 +89,10 @@ li a img.logo {
     height: auto;
     margin-right: 0.5em;
     vertical-align: middle;
+    opacity: 0.75;
+    filter: grayscale(1);
+    mix-blend-mode: multiply;
+    transition: all 500ms;
 }
 
 li a img.play {
@@ -97,12 +101,13 @@ li a img.play {
     right: 0;
     width: 20px;
     height: auto;
-    opacity: 0.2;
-    transition: all 250ms;
+    opacity: 0.25;
+    transition: all 500ms;
 }
 
-li a:hover img.play {
-    opacity: 0.5;
+li a:hover img {
+    opacity: 1;
+    filter: none;
 }
 
 a {
@@ -117,4 +122,12 @@ p.contact {
     text-transform: lowercase;
     font-size: 1.5em;
     line-height: 1em;
+}
+
+p.contact a {
+    text-decoration: none;
+}
+
+p.contact a:hover {
+    text-decoration: underline;
 }
