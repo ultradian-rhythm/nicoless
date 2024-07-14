@@ -15,6 +15,22 @@ body {
     color: #666;
 }
 
+header {
+    max-width: 640px;
+    margin: 0 auto 4.5em auto;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    color: #999;
+}
+
+footer {
+    max-width: 640px;
+    margin: 0 auto 4.5em auto;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    color: #999;
+}
+
 section {
     max-width: 640px;
     margin: 0 auto 1.5em auto;
