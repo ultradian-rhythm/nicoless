@@ -9,7 +9,7 @@
 }
 
 body {
-    margin: 6em 0;
+    margin: 7.5% 0;
     padding: 0 25px;
     background-color: #eee;
     font-family: 'Crete Round', serif;
@@ -21,7 +21,7 @@ body {
 
 header {
     max-width: var(--width);
-    margin: 0 auto 4.5em auto;
+    margin: 0 auto 5% auto;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     color: #999;
@@ -29,7 +29,7 @@ header {
 
 footer {
     max-width: var(--width);
-    margin: 4.5em auto 0 auto;
+    margin: 5% auto 0 auto;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     color: #999;
@@ -37,8 +37,7 @@ footer {
 
 section {
     max-width: var(--width);
-    margin: 0 auto 1.5em auto;
-    padding: 1.5em 0;
+    margin: 0 auto 5% auto;
 }
 
 h2 {
@@ -51,7 +50,7 @@ h2 {
 }
 
 p {
-    margin: 0 0 1.5em 0;
+    margin: 0 0 2.5% 0;
 }
 
 figure {
