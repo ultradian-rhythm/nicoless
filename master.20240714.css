@@ -49,6 +49,15 @@ h2 {
     color: #444;
 }
 
+h2 a {
+    text-decoration: none;
+}
+
+h2 a:hover {
+    text-decoration: underline;
+}
+
+
 p {
     margin: 0 0 2.5% 0;
 }
