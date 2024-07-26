@@ -21,7 +21,7 @@ body {
 
 header {
     max-width: var(--width);
-    margin: 0 auto 5% auto;
+    margin: 0 auto 1.5em auto;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     color: #999;
@@ -37,43 +37,35 @@ footer {
 
 section {
     max-width: var(--width);
-    margin: 0 auto 5% auto;
+    margin: 0 auto 3em auto;
 }
 
 h2 {
-    margin: 0 0 0.5em 0;
-    font-weight: normal;
-    font-size: 1.5em;
+    margin: 0 0 1.5em 0;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
-    line-height: 1.25em;
-    color: #444;
+    font-size: 1em;
+    color: #999;
 }
-
-h2 a {
-    text-decoration: none;
-}
-
-h2 a:hover {
-    text-decoration: underline;
-}
-
 
 p {
-    margin: 0 0 2.5% 0;
+    margin: 0 0 1.5em 0;
 }
 
 figure {
-    width: 100%;
-    margin: 0;
-    line-height: 0;
+    width: 420px;
+    margin: 0 0 3em 0;
 }
 
-figure img,
-video {
+figure img {
     width: 100%;
     height: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+}
+
+figcaption {
+    margin-bottom: 0.75em;
 }
 
 ul.buttons {
@@ -84,7 +76,7 @@ ul.buttons {
     padding: 0;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
-    font-size: 0.85em;
+    font-size: 0.75em;
     line-height: 1.25em;
 }
 
