@@ -51,7 +51,7 @@ figcaption small {
 }
 
 ul {
-    margin: 2em 0 0 0;
+    margin: 0 0 1.5em 0;
     padding: 0;
     list-style: none;
     font-family: 'Roboto', sans-serif;
@@ -64,11 +64,15 @@ ul li {
 }
 
 ul li a {
-    color: #999;
+    padding: 0.25em 0.5em;
+    background-color: #333;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #fff;
 }
 
 ul li a:hover {
-    color: inherit;
+    background-color: #555;
 }
 
 a {
@@ -76,6 +80,11 @@ a {
     text-underline-offset: 0.15em;
     text-decoration-color: #ccc;
     color: inherit;
+}
+
+small {
+    font-size: 1em;
+    color: #999;
 }
 
 footer {
