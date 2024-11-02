@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input,
+button,
+select,
+textarea {
+	vertical-align: baseline;
+	text-align: inherit;
+	font-family: inherit;
+	font-variant: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: inherit;
+	color: inherit;
+}
+input,
+textarea {
+    outline: 0;
+}
+textarea {
+    resize: none;
+}
+input[type=button],
+input[type=submit],
+input[type=reset],
+select,
+button,
+label {
+    cursor: pointer;
+}
+[onclick] {
+	cursor: pointer;
+}
+*:focus {
+    outline: 0;
+}
+::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+:-moz-placeholder {
+    opacity: 0.5;
+    color: inherit;
+}
+::-moz-placeholder {
+    opacity: 0.5;
+    color: inherit;
+}
+::-webkit-input-placeholder {
+    opacity: 0.5;
+    color: inherit;
+}
+:-ms-input-placeholder {
+    opacity: 0.5;
+    color: inherit;
+}
+iframe {
+    margin:0;
+    padding:0;
+    border:0;
+}
+figure {
+    margin:0;
+}
+a img {
+    border:0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top:0;
+    margin-bottom:1.5em;
+    line-height:1.25em;
+}
+p {
+    margin:0 0 1.5em;
+}
+table {
+    border-collapse:collapse;
+}
+a {
+    color: inherit;
+}
+a,
+a:active {
+    outline: 0;
+}

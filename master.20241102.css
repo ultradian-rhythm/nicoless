@@ -1,3 +1,9 @@
+@import url('standards.20241102.css');
+
+@import url('fonts/roboto-v20-latin/loader.css');
+@import url('fonts/crete-round-v15-latin/loader.css');
+@import url('fonts/crete-round-v15-latin/loader.css');
+
 * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -18,11 +24,31 @@ body {
 
 section {
     max-width: 640px;
-    margin: 0 auto;
+    margin: 0 auto 4.5em auto;
 }
 
 p {
     margin: 0 0 1.5em 0;
+}
+
+blockquote {
+    margin: 0 0 1.5em 0;
+}
+
+blockquote:before {
+    display: block;
+    margin-bottom: 0.4em;
+    content: '❡';
+    content: '„';
+    font-style: normal;
+    font-size: 4em;
+    color: #999;
+}
+
+blockquote cite {
+    display: block;
+    white-space: nowrap;
+    color: #999;
 }
 
 figure {
@@ -42,6 +68,8 @@ figcaption {
     font-size: 3em;
     line-height: 0.85em;
     text-align: center;
+    font-style: normal;
+
 }
 
 figcaption small {
@@ -91,14 +119,6 @@ footer {
     max-width: 640px;
     margin: 7.5% auto 0 auto;
     padding-top: 1.5em;
-}
-
-footer:before {
-    display: block;
-    margin-bottom: 1em;
-    content: '❡';
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
 }
 
 footer a {
