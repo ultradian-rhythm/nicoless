@@ -23,7 +23,7 @@ body {
 }
 
 section {
-    max-width: 420px;
+    max-width: 500px;
     margin: 0 auto 4.5em auto;
 }
 
@@ -59,7 +59,7 @@ figure {
 figure img {
     width: 100%;
     height: auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
 }
 
@@ -68,8 +68,7 @@ figcaption {
     font-size: 2.5em;
     line-height: 0.85em;
     text-align: center;
-    font-style: normal;
-
+    font-style: italic;
 }
 
 figcaption small {
@@ -88,19 +87,20 @@ ul {
 }
 
 ul li {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.75em;
 }
 
 ul li a {
-    padding: 0.25em 0.5em;
-    background-color: #333;
+    padding: 0.25em 0.75em;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     text-decoration: none;
-    color: #fff;
 }
 
 ul li a:hover {
-    background-color: #555;
+    background-color: #666;
+    color: #fff;
 }
 
 a {
@@ -116,8 +116,8 @@ small {
 }
 
 footer {
-    max-width: 640px;
-    margin: 7.5% auto 0 auto;
+    max-width: 450px;
+    margin: 1.5% auto 0 auto;
     padding-top: 1.5em;
 }
 
