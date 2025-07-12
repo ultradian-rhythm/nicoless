@@ -1,15 +1,3 @@
-@import url('standards.20241102.css');
-
-@import url('fonts/roboto-v20-latin/loader.css');
-@import url('fonts/crete-round-v15-latin/loader.css');
-@import url('fonts/crete-round-v15-latin/loader.css');
-
-* {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
 body {
     margin: 7.5% 0 2.5% 0;
     padding: 0 25px;

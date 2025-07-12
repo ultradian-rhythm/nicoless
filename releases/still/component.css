@@ -1,0 +1,6 @@
+@import url('bilbo-v20-latin/loader.css');
+
+figcaption span {
+    font-family: 'Bilbo', sans-serif;
+    font-size: 2em;
+}
