@@ -11,8 +11,8 @@ error_reporting(E_ALL);
  * Helpers
  */
 
-function parseTemplate(string $template, object $data): string {
-    $template = file_get_contents("./templates/$template.html");
+function parseTemplate(object $data): string {
+    $template = file_get_contents("./templates/$data->template.html");
 
     if (file_exists("$data->path/component.css")) {
         $template = preg_replace(
@@ -22,14 +22,15 @@ function parseTemplate(string $template, object $data): string {
         );
     }
 
-    $replace = [
+    $contents = [
         '%title%' => $data->title,
+        '%description%' => $data->description,
         '%component%' => $data->component,
     ];
 
     return str_replace(
-        array_keys($replace),
-        array_values($replace),
+        array_keys($contents),
+        array_values($contents),
         $template
     );
 }
@@ -56,14 +57,14 @@ function getComponents(string $path): array {
 }
 
 /**
- * Generate
+ * Generator
  */
 
 $components = getComponents('./');
 
 foreach ($components as $component) {
-    $pageContents = parseTemplate($component->template, $component);
-    file_put_contents("$component->path/index.html", $pageContents);
+    $contents = parseTemplate($component);
+    file_put_contents("$component->path/index.html", $contents);
 }
 
 /**
@@ -71,8 +72,7 @@ foreach ($components as $component) {
  */
 
 $page = filter_input(INPUT_GET, 'preview');
-
-$html = file_get_contents($page ? "./$page/index.html" : 'index.html');
+$html = file_get_contents(($page ? "./$page/" : '') . 'index.html');
 $html = preg_replace('/href="component\.css"/i', 'href="./' . $page . '/component.css"', $html);
 $html = preg_replace('/src="(?!http|\/)([^"]+)"/i', 'src="./' . $page . '/$1"', $html);
 
