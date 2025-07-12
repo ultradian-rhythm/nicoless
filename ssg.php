@@ -72,12 +72,10 @@ foreach ($components as $component) {
 
 $page = filter_input(INPUT_GET, 'preview');
 
-if ($page) {
-    $html = file_get_contents("./$page/index.html");
-    $html = preg_replace('/href="component\.css"/i', 'href="./' . $page . '/component.css"', $html);
-    $html = preg_replace('/src="(?!http|\/)([^"]+)"/i', 'src="./' . $page . '/$1"', $html);
+$html = file_get_contents($page ? "./$page/index.html" : 'index.html');
+$html = preg_replace('/href="component\.css"/i', 'href="./' . $page . '/component.css"', $html);
+$html = preg_replace('/src="(?!http|\/)([^"]+)"/i', 'src="./' . $page . '/$1"', $html);
 
-    exit($html);
-}
+exit($html);
 
 ?>
