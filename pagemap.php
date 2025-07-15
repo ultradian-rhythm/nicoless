@@ -1,15 +1,15 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 /**
  * Pagemap SSG
  * Copyright 2025, Nico Less (https://nicoless.de)
  * Version 20250715
  */
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-$cachefiles = [
+$assets = [
     'template/standards.css' => null,
     'template/main.css' => null,
     'template/modules.css' => null,
@@ -35,7 +35,7 @@ $feed = [
  */
 
 function parseTemplate(object $data): string {
-    global $cachefiles;
+    global $assets;
 
     $template = file_get_contents("./template/$data->template.html");
 
@@ -62,7 +62,7 @@ function parseTemplate(object $data): string {
         '%component%' => $data->component,
     ];
 
-    foreach ($cachefiles as $filepath => $cachepath) {
+    foreach ($assets as $filepath => $cachepath) {
         $template = str_replace($filepath, $cachepath, $template);
     }
 
@@ -73,7 +73,7 @@ function parseTemplate(object $data): string {
     );
 }
 
-function getComponents(string $path): array {
+function getComponents(string $path, string|null $parent = null): array {
     $iterator = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
         RecursiveIteratorIterator::SELF_FIRST
@@ -86,6 +86,10 @@ function getComponents(string $path): array {
 
             $data->path = $file->getPath();
             $data->component = file_get_contents("$data->path/component.html");
+
+            if ($parent && ($data->parent ?? null) != $parent) {
+                continue;
+            }
             
             $components[] = $data;
         }
@@ -95,14 +99,14 @@ function getComponents(string $path): array {
 }
 
 function getSubpages(object $teaser): array {
-    $components = getComponents($teaser->path);
+    $components = getComponents($teaser->path, $teaser->path);
     $template = file_get_contents("./template/components/$teaser->template.html");
 
-    foreach ($components as $component) {
-        if (($component->parent ?? null) != $teaser->path) {
-            continue;
-        }
+    usort($components, function($a, $b) {
+        return strtotime($b->date ?? '') <=> strtotime($a->date ?? '');
+    });
 
+    foreach ($components as $component) {
         if ($component->date ?? false) {
             $dateformat = (new IntlDateFormatter('en_US', 0, 0, null, null, $teaser->dateFormat))->format(new DateTime($component->date));
         }
@@ -138,7 +142,7 @@ function getSubpages(object $teaser): array {
 
 array_map('unlink', array_filter(glob('template/cache/*'), 'is_file'));
 
-foreach ($cachefiles as $filepath => &$cachepath) {
+foreach ($assets as $filepath => &$cachepath) {
     $filemtime = filemtime($filepath);
     $pathinfo = pathinfo($filepath);
     $cachepath = "template/cache/$pathinfo[filename].$filemtime.$pathinfo[extension]";
