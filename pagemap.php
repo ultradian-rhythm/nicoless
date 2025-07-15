@@ -15,6 +15,18 @@ $cachefiles = [
     'template/pagemap.js' => null,
 ];
 
+$feed = [
+    'title' => 'Recommended Music — Nico Less',
+    'description' => 'Recommendations for slow and melancholic music, between Ambient and Experimental. New recommendations once a week.',
+    'language' => 'en-US',
+    'link' => 'https://nicoless.de',
+    'categories' => [
+        'recommendations' => 'Recommendations',
+    ],
+    'ttl' => '1440',
+    'file' => 'rss.xml',
+];
+
 /**
  * Helpers
  */
@@ -118,7 +130,7 @@ function getSubpages(object $teaser): array {
 }
 
 /**
- * Assets
+ * Build assets
  */
 
 array_map('unlink', array_filter(glob('template/cache/*'), 'is_file'));
@@ -132,18 +144,52 @@ foreach ($cachefiles as $filepath => &$cachepath) {
 }
 
 /**
- * Generator
+ * Build site and feed
  */
 
 $components = getComponents('./');
 
+$rss = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"></rss>');
+$channel = $rss->addChild('channel');
+$channel->addChild('title', htmlspecialchars($feed['title']));
+$channel->addChild('link', htmlspecialchars($feed['link']));
+$channel->addChild('description', htmlspecialchars($feed['description']));
+$channel->addChild('language', htmlspecialchars($feed['language']));
+$channel->addChild('lastBuildDate', date(DATE_RSS));
+$channel->addChild('ttl', $feed['ttl']);
+
 foreach ($components as $component) {
+    // SSG
     $contents = parseTemplate($component);
     file_put_contents("$component->path/index.html", $contents);
+
+    // RSS
+    if (in_array($component->parent ?? null, array_keys($feed['categories']))) {
+        $path = trim($feed['link'], '/') . trim($component->path, '.');
+
+        $item = $channel->addChild('item');
+        $item->addChild('title', htmlspecialchars($component->title));
+        $item->addChild('description', htmlspecialchars($component->description));
+        $item->addChild('pubDate', date(DATE_RSS, strtotime($component->date)));
+        $item->addChild('link', htmlspecialchars($path));
+        $item->addChild('category', htmlspecialchars($feed['categories'][$component->parent]));
+
+        $image = is_file("$component->path/cover.webp") ? "$path/cover.webp" : false;
+
+        if ($image) {
+            $enclosure = $item->addChild('enclosure');
+            $enclosure->addAttribute('url', $image);
+            $enclosure->addAttribute('length', filesize("$component->path/cover.webp"));
+            $enclosure->addAttribute('type', 'image/webp');
+        }
+    }
+
 }
 
+file_put_contents($feed['file'], $rss->asXML());
+
 /**
- * Preview
+ * Output preview
  */
 
 $page = trim(substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME'])), '/');
