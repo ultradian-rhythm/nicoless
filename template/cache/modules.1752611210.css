@@ -70,9 +70,10 @@ ul.requirements {
     padding: 1.5rem 2rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+    hyphens: auto;
+    text-align: left;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
-    text-align: left;
 }
 
 ul.requirements li {

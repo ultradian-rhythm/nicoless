@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Setup
+ * Pagemap SSG
+ * Copyright 2025, Nico Less (https://nicoless.de)
+ * Version 20250715
  */
 
 ini_set('display_errors', 1);
