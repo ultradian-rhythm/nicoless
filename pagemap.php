@@ -20,11 +20,12 @@ $feed = [
     'description' => 'Recommendations for slow and melancholic music, between Ambient and Experimental. New recommendations once a week.',
     'language' => 'en-US',
     'link' => 'https://nicoless.de',
+    'ttl' => '1440',
+    'file' => 'rss.xml',
+
     'categories' => [
         'recommendations' => 'Recommendations',
     ],
-    'ttl' => '1440',
-    'file' => 'rss.xml',
 ];
 
 /**
@@ -159,11 +160,11 @@ $channel->addChild('lastBuildDate', date(DATE_RSS));
 $channel->addChild('ttl', $feed['ttl']);
 
 foreach ($components as $component) {
-    // SSG
+    // create static page
     $contents = parseTemplate($component);
     file_put_contents("$component->path/index.html", $contents);
 
-    // RSS
+    // add feed entry
     if (in_array($component->parent ?? null, array_keys($feed['categories']))) {
         $path = trim($feed['link'], '/') . trim($component->path, '.');
 
@@ -183,13 +184,12 @@ foreach ($components as $component) {
             $enclosure->addAttribute('type', 'image/webp');
         }
     }
-
 }
 
 file_put_contents($feed['file'], $rss->asXML());
 
 /**
- * Output preview
+ * Generate preview
  */
 
 $page = trim(substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME'])), '/');

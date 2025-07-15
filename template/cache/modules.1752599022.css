@@ -120,7 +120,15 @@ section.recommendation {
     max-width: 640px;
 }
 
-/*
+section.recommendation p {
+    text-align: justify;
+}
+
+section.recommendation iframe {
+    margin-bottom: 3rem;
+}
+
+    /*
     Teasers
 */
 
