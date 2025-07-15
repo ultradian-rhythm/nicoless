@@ -1,0 +1,11 @@
+{
+    "title": "Recommendations",
+    "description": "test",
+    "template": "main",
+    
+    "teaser": {
+        "path": "recommendations",
+        "template": "recommendation-teaser",
+        "dateFormat": "dd. MMM. yyyy"
+    }
+}

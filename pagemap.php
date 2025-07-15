@@ -1,0 +1,156 @@
+<?php
+
+/**
+ * Setup
+ */
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+$cachefiles = [
+    'template/standards.css' => null,
+    'template/main.css' => null,
+    'template/modules.css' => null,
+    'template/mobile.css' => null,
+    'template/pagemap.js' => null,
+];
+
+/**
+ * Helpers
+ */
+
+function parseTemplate(object $data): string {
+    global $cachefiles;
+
+    $template = file_get_contents("./template/$data->template.html");
+
+    if (file_exists("$data->path/component.css")) {
+        $template = preg_replace(
+            '/(<head.*?>.*?)(<link\b)/is',
+            '$1<link rel="stylesheet" href="component.css">$2',
+            $template
+        );
+    }
+
+    if (isset($data->teaser)) {
+        $data->component = str_replace(
+            '%teaser%',
+            implode(PHP_EOL, getSubpages($data->teaser)),
+            $data->component
+        );
+    }
+
+    $contents = [
+        '%robots%' => $data->robots ?? 'index, follow',
+        '%title%' => $data->title,
+        '%description%' => $data->description,
+        '%component%' => $data->component,
+    ];
+
+    foreach ($cachefiles as $filepath => $cachepath) {
+        $template = str_replace($filepath, $cachepath, $template);
+    }
+
+    return str_replace(
+        array_keys($contents),
+        array_values($contents),
+        $template
+    );
+}
+
+function getComponents(string $path): array {
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
+
+    foreach ($iterator as $file) {
+        if ($file->isFile() && $file->getFilename() == 'component.json') {
+            $contents = file_get_contents($file->getPathname());
+            $data = json_decode($contents);
+
+            $data->path = $file->getPath();
+            $data->component = file_get_contents("$data->path/component.html");
+            
+            $components[] = $data;
+        }
+    }
+
+    return $components ?? [];
+}
+
+function getSubpages(object $teaser): array {
+    $components = getComponents($teaser->path);
+    $template = file_get_contents("./template/components/$teaser->template.html");
+
+    foreach ($components as $component) {
+        if (($component->parent ?? null) != $teaser->path) {
+            continue;
+        }
+
+        if ($component->date ?? false) {
+            $dateformat = (new IntlDateFormatter('en_US', 0, 0, null, null, $teaser->dateFormat))->format(new DateTime($component->date));
+        }
+
+        if ($component->tags ?? false) {
+            $tags = array_map('trim', explode(',', $component->tags));
+            $tags = implode(PHP_EOL, array_map(fn($tag) => "<li>$tag</li>", $tags));
+        }
+
+        $contents = [
+            '%title%' => $component->title,
+            '%description%' => $component->description,
+            '%image%' => "/$component->path/cover.webp",
+            '%path%' => $component->path,
+            '%date%' => $component->date ?? null,
+            '%dateformat%' => $dateformat ?? null,
+            '%tags%' => $tags ?? null,
+        ];
+    
+        $subpages[] = str_replace(
+            array_keys($contents),
+            array_values($contents),
+            $template
+        );
+    }
+
+    return $subpages ?? [];
+}
+
+/**
+ * Assets
+ */
+
+array_map('unlink', array_filter(glob('template/cache/*'), 'is_file'));
+
+foreach ($cachefiles as $filepath => &$cachepath) {
+    $filemtime = filemtime($filepath);
+    $pathinfo = pathinfo($filepath);
+    $cachepath = "template/cache/$pathinfo[filename].$filemtime.$pathinfo[extension]";
+
+    copy($filepath, $cachepath);
+}
+
+/**
+ * Generator
+ */
+
+$components = getComponents('./');
+
+foreach ($components as $component) {
+    $contents = parseTemplate($component);
+    file_put_contents("$component->path/index.html", $contents);
+}
+
+/**
+ * Preview
+ */
+
+$page = trim(substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME'])), '/');
+$html = file_get_contents(($page ? "./$page/" : '') . 'index.html');
+$html = preg_replace('/href="component\.css"/i', 'href="/' . $page . '/component.css"', $html);
+$html = preg_replace('/src="(?!http|\/)([^"]+)"/i', 'src="/' . $page . '/$1"', $html);
+
+exit($html);
+
+?>

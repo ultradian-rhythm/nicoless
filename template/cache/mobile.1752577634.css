@@ -1,0 +1,75 @@
+@media screen and (max-width: 768px) {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        height: calc(50px + 1rem);
+        padding: 0;
+    }
+
+    header nav button {
+        display: block;
+    }
+
+    header nav ul.main {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding-top: 100px;
+        background-color: #eeeeee90;
+        backdrop-filter: blur(10px);
+        text-align: center;
+    }
+
+    header nav ul.main.active {
+        display: block;
+    }
+
+    header nav ul.main li {
+        display: block;
+        margin: 1rem 0;
+        font-size: 1.25em;
+    }
+
+    header nav ul.main li:before {
+        display: none;
+    }
+
+    header nav ul.meta {
+        top: 25px;
+        right: 25px;
+    }
+
+    header nav ul.meta li {
+        margin: 0 0 0 1em;
+    }
+
+    main {
+        padding: 110px 25px 25px 25px;
+    }
+
+    div.releases,
+    div.recommendations {
+        display: block;
+    }
+
+    div.releases section,
+    div.recommendations section {
+        width: auto;
+        margin-bottom: 1.5rem;
+    }
+
+    section.release {
+        margin-bottom: 3rem;
+    }
+
+    section.recommendation {
+        margin-bottom: 1.5rem;
+    }
+}

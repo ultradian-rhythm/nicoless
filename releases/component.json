@@ -1,0 +1,11 @@
+{
+    "title": "Releases",
+    "description": "test",
+    "template": "main",
+    
+    "teaser": {
+        "path": "releases",
+        "template": "release-teaser",
+        "dateFormat": "dd. MMM. yyyy"
+    }
+}

@@ -1,0 +1,178 @@
+/*
+    Basics
+*/
+
+.width-m {
+    max-width: 450px;
+}
+
+.width-l {
+    max-width: 960px;
+}
+
+.button {
+    padding: 0.25rem 1rem;
+    background-color: #ddd;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+/*
+    Lists
+*/
+
+ul.listen {
+    margin: 0 0 1.5em 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 1em;
+}
+
+ul.listen li {
+    margin-bottom: 0.75em;
+}
+
+ul.listen li a {
+    padding: 0.25em 0.75em;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+ul.listen li a:hover {
+    background-color: #666;
+    color: #fff;
+}
+
+ul.tags {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.tags li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+    color: #999;
+}
+
+ul.tags li:before {
+    content: '#';
+}
+
+ul.requirements {
+    margin-bottom: 4.5rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    text-align: left;
+}
+
+ul.requirements li {
+    margin: 0 0 0.5rem 0;
+    padding: 0 0 0 0.5rem;
+}
+
+ul.requirements li:last-child {
+    margin-bottom: 0;
+}
+
+ul.requirements li::marker {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    content: '»';
+}
+
+/*
+    Containers
+*/
+
+section.release {
+    max-width: 450px;
+}
+
+section.release figure img {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+section.release figure figcaption {
+    margin: 0.1em 0 0.5em 0;
+    font-size: 2.5em;
+    line-height: 0.85em;
+    text-align: center;
+    font-style: italic;
+}
+
+section.release figure figcaption small {
+    font-size: 0.4em;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+}
+
+section.recommendation {
+    max-width: 640px;
+}
+
+/*
+    Teasers
+*/
+
+div.releases {
+    display: flex;
+    gap: 50px;
+    margin: 0 auto;
+}
+
+div.releases section {
+    flex-shrink: 1;
+}
+
+div.releases section img {
+    max-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}
+
+div.recommendations {
+    display: flex;
+    gap: 50px;
+    margin: 0 auto;
+}
+
+div.recommendations section {
+    flex-shrink: 1;
+    width: 50%;
+    text-align: left;
+}
+
+div.recommendations section img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+div.recommendations section div.teaser {
+    padding: 0.75em 20px;
+}
+
+div.recommendations section div.teaser h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-size: 1.5rem;
+}
+
+div.recommendations section div.teaser p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+div.recommendations section div.teaser time {
+    font-size: 0.9em;
+    color: #999;
+}
