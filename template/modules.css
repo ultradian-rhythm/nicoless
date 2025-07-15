@@ -48,7 +48,7 @@ ul.listen li a:hover {
 }
 
 ul.tags {
-    margin: 0;
+    margin: 0 0 0.5rem;
     padding: 0;
     list-style: none;
 }
@@ -121,6 +121,7 @@ section.recommendation {
 }
 
 section.recommendation p {
+    hyphens: auto;
     text-align: justify;
 }
 
@@ -128,7 +129,7 @@ section.recommendation iframe {
     margin-bottom: 3rem;
 }
 
-    /*
+/*
     Teasers
 */
 
@@ -173,6 +174,10 @@ div.recommendations section div.teaser h3 {
     margin-top: 0;
     margin-bottom: 0.5em;
     font-size: 1.5rem;
+}
+
+div.recommendations section div.teaser h3 a {
+    text-decoration: none;
 }
 
 div.recommendations section div.teaser p {
