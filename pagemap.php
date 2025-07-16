@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 /**
  * Pagemap SSG
  * Copyright 2025, Nico Less (https://nicoless.de)
- * Version 2025-07-15
+ * Version 2025-07-16
  */
 
 $assets = [

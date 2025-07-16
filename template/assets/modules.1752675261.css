@@ -1,5 +1,5 @@
 /*
-    Basics
+    Common
 */
 
 .width-m {
@@ -22,7 +22,7 @@
 }
 
 /*
-    Lists
+    Link list
 */
 
 ul.listen {
@@ -50,6 +50,10 @@ ul.listen li a:hover {
     background-color: #666;
     color: #fff;
 }
+
+/*
+    Tag list
+*/
 
 ul.tags {
     margin: 0 0 0.5rem;
@@ -96,8 +100,25 @@ ul.requirements li::marker {
 }
 
 /*
-    Containers
+    Releases
 */
+
+div.releases {
+    display: flex;
+    gap: 50px;
+    margin: 0 auto;
+}
+
+div.releases section {
+    flex-shrink: 1;
+    max-width: 420px;
+}
+
+div.releases section img {
+    max-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+}
 
 section.release {
     max-width: 450px;
@@ -121,38 +142,9 @@ section.release figure figcaption small {
     font-style: normal;
 }
 
-section.recommendation {
-    max-width: 640px;
-}
-
-section.recommendation p {
-    hyphens: auto;
-    text-align: justify;
-}
-
-section.recommendation iframe {
-    margin-bottom: 3rem;
-}
-
 /*
-    Teasers
+    Recommendations
 */
-
-div.releases {
-    display: flex;
-    gap: 50px;
-    margin: 0 auto;
-}
-
-div.releases section {
-    flex-shrink: 1;
-}
-
-div.releases section img {
-    max-width: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-}
 
 div.recommendations {
     display: flex;
@@ -162,7 +154,7 @@ div.recommendations {
 
 div.recommendations section {
     flex-shrink: 1;
-    width: 50%;
+    max-width: 420px;
     text-align: left;
 }
 
@@ -193,4 +185,17 @@ div.recommendations section div.teaser p {
 div.recommendations section div.teaser time {
     font-size: 0.9em;
     color: #999;
+}
+
+section.recommendation {
+    max-width: 640px;
+}
+
+section.recommendation p {
+    hyphens: auto;
+    text-align: justify;
+}
+
+section.recommendation iframe {
+    margin-bottom: 3rem;
 }
