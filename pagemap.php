@@ -120,7 +120,7 @@ function getSubpages(object $teaser): array {
             '%title%' => $component->title,
             '%description%' => $component->description,
             '%image%' => "/$component->path/cover.webp",
-            '%path%' => $component->path,
+            '%path%' => "/$component->path",
             '%date%' => $component->date ?? null,
             '%dateformat%' => $dateformat ?? null,
             '%tags%' => $tags ?? null,
