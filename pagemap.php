@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 /**
  * Pagemap SSG
  * Copyright 2025, Nico Less (https://nicoless.de)
- * Version 20250715
+ * Version 2025-07-15
  */
 
 $assets = [
@@ -19,7 +19,7 @@ $assets = [
 
 $feed = [
     'title' => 'Recommended Music — Nico Less',
-    'description' => 'Recommendations for slow and melancholic music, between Ambient and Experimental. New recommendations once a week.',
+    'description' => 'Recommendations for slow and melancholic music, between Ambient and Experimental.',
     'language' => 'en-US',
     'link' => 'https://nicoless.de',
     'ttl' => '1440',
@@ -62,8 +62,8 @@ function parseTemplate(object $data): string {
         '%component%' => $data->component,
     ];
 
-    foreach ($assets as $filepath => $cachepath) {
-        $template = str_replace($filepath, $cachepath, $template);
+    foreach ($assets as $filepath => $assetpath) {
+        $template = str_replace($filepath, $assetpath, $template);
     }
 
     return str_replace(
@@ -140,14 +140,14 @@ function getSubpages(object $teaser): array {
  * Build assets
  */
 
-array_map('unlink', array_filter(glob('template/cache/*'), 'is_file'));
+array_map('unlink', array_filter(glob('template/assets/*'), 'is_file'));
 
-foreach ($assets as $filepath => &$cachepath) {
+foreach ($assets as $filepath => &$assetpath) {
     $filemtime = filemtime($filepath);
     $pathinfo = pathinfo($filepath);
-    $cachepath = "template/cache/$pathinfo[filename].$filemtime.$pathinfo[extension]";
+    $assetpath = "template/assets/$pathinfo[filename].$filemtime.$pathinfo[extension]";
 
-    copy($filepath, $cachepath);
+    copy($filepath, $assetpath);
 }
 
 /**
