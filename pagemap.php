@@ -4,9 +4,10 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 /**
- * Pagemap SSG
+ * Pagemap 3 SSG
  * Copyright 2025, Nico Less (https://nicoless.de)
- * Version 2025-07-16
+ * Release 2025-07-16
+ * Initial 2025-07-16
  */
 
 $assets = [
@@ -18,15 +19,15 @@ $assets = [
 ];
 
 $feed = [
-    'title' => 'Recommended Music — Nico Less',
-    'description' => 'Recommendations for slow and melancholic music, between Ambient and Experimental.',
+    'title' => 'Nico Less',
+    'description' => 'I write about things I do, albums I like and thoughts I have. It’s like a social media feed, but slow and quiet.',
     'language' => 'en-US',
     'link' => 'https://nicoless.de',
     'ttl' => '1440',
     'file' => 'rss.xml',
 
     'categories' => [
-        'recommendations' => 'Recommendations',
+        'blog' => 'Blog',
     ],
 ];
 

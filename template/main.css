@@ -1,13 +1,39 @@
+:root {
+    --background: #fff;
+
+    --font-color-nav: #757B82;
+    --font-color-nav-active: #333E4C;
+    --border-color-nav-limiter: #333E4C;
+    --border-color-nav-bottom: transparent;
+
+    --icon-color-nav: #757B82;
+    --icon-color-nav-active: #333E4C;
+
+    --font-color-main: #757B82;
+    --font-color-headline: #333E4C;
+    --font-color-context: #C0C2C5;
+
+    --button-background-color: #333E4C;
+    --button-background-color-active: #212121;
+    
+    --accent-color: #757B82;
+    --border-color: #ccc;
+}
+
+html {
+    min-height: 100%;
+}
+
 body {
     margin: 5rem 0 0 0;
     padding: 50px 25px 0 25px;
-    background-color: #eee;
+    background: var(--background);
     text-align: center;
     font-family: 'Crete Round', serif;
     font-style: italic;
     font-size: 18px;
     line-height: 26px;
-    color: #666;
+    color: var(--font-color-main);
 }
 
 header {
@@ -17,7 +43,8 @@ header {
     left: 0;
     width: 100%;
     padding: 0 75px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color-nav-bottom);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
 }
 
@@ -38,7 +65,7 @@ header nav button {
 
 header nav button svg {
     height: 1.25rem;
-    fill: #999;
+    fill: var(--font-color-context);
 }
 
 header nav ul.main {
@@ -65,7 +92,7 @@ header nav ul.main li:before {
     display: block;
     width: 1px;
     height: 100%;
-    background-color: #ddd;
+    background-color: var(--border-color-nav-limiter);
     transform: rotate(25deg);
     content: '';
 }
@@ -76,8 +103,7 @@ header nav ul.main li:first-child:before {
 
 header nav ul.main li a {
     text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
+    color: var(--font-color-nav);
 }
 
 header nav ul.meta {
@@ -91,27 +117,41 @@ header nav ul.meta {
 }
 
 header nav ul.meta li {
-    margin: 1.2em 0 1em 1.25em;
+    margin: 1em 0 1em 1.5em;
     padding: 0;
     display: inline-block;
 }
 
 header nav ul.meta li a {
     text-decoration: none;
+    font-size: 0.9rem;
 }
 
 header nav ul.meta li a svg {
     height: 1.25rem;
-    fill: #999;
+    margin-top: -0.15rem;
+    margin-right: 0.3em;
+    vertical-align: middle;
+    fill: var(--icon-color-nav);
+}
+
+header nav ul.meta li a:hover svg {
+    fill: var(--icon-color-nav-active);
 }
 
 header nav ul li a {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
     transition: 300ms opacity;
 }
 
 header nav ul li:hover a,
 header nav ul li.active a {
-    opacity: 0.5;
+    color: var(--font-color-nav-active);
+}
+
+header nav ul li.active a {
+    font-weight: bold;
 }
 
 main {
@@ -128,16 +168,22 @@ section:last-of-type {
 }
 
 h1 {
-    margin: 0 auto 2em auto;
+    margin: 0 auto 2.5em auto;
     font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--font-color-headline);
 }
 
 p {
     margin: 0 0 1.5em 0;
 }
 
-h1 + p {
+h1 + p:not(.no-teaser) {
     margin: -3em 0 3.5em 0;
+}
+
+h1 + p.no-teaser {
+    margin-top: -3em;
 }
 
 blockquote {
@@ -151,13 +197,13 @@ blockquote:before {
     content: '„';
     font-style: normal;
     font-size: 4em;
-    color: #999;
+    color: var(--font-color-context);
 }
 
 blockquote cite {
     display: block;
     white-space: nowrap;
-    color: #999;
+    color: var(--font-color-context);
 }
 
 figure {
@@ -180,7 +226,7 @@ a {
 
 small {
     font-size: 1em;
-    color: #999;
+    color: var(--font-color-context);
 }
 
 footer {
@@ -193,11 +239,11 @@ footer ul {
     max-width: auto;
     margin: 0;
     padding: 0.25em 1em 0 1em;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid var(--border-color);
     list-style: none;
 }
 
 footer ul li a {
     text-decoration: none;
-    color: #999;
+    color: var(--font-color-context);
 }

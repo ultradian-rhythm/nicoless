@@ -1,0 +1,11 @@
+{
+    "title": "Nico Less — Blog",
+    "description": "I write about things I do, albums I like and thoughts I have. It’s like a social media feed, but slow and quiet.",
+    "template": "main",
+    
+    "teaser": {
+        "path": "blog",
+        "template": "blog-teaser",
+        "dateFormat": "dd. MMM. yyyy"
+    }
+}
