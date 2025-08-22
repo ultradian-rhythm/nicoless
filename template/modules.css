@@ -26,10 +26,25 @@
     white-space: nowrap;
 }
 
+.border-top {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-style: solid;
+    border-color: var(--border-color);
+    border-width: 1px 0;
+}
+
 .border-bottom {
-    margin-bottom: 3rem;
+    margin-bottom: 6rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+}
+
+.heading:after {
+    display: block;
+    width: 3rem;
+    margin: 1.5rem auto;
+    border-bottom: 1px solid var(--accent-color);
+    content: '';
 }
 
 /*
@@ -82,35 +97,6 @@ ul.tags li {
 
 ul.tags li:before {
     content: '#';
-}
-
-/*
-    Requirement list
-*/
-
-ul.requirements {
-    margin-bottom: 3rem;
-    padding: 2.5rem 3rem;
-    background-color: var(--accent-color);
-    border-radius: 5px;
-    hyphens: auto;
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
-    font-style: italic;
-    color: #fff;
-}
-
-ul.requirements li {
-    margin: 0 0 0.75rem 0;
-    padding: 0 0 0 1rem;
-}
-
-ul.requirements li:last-child {
-    margin-bottom: 0;
-}
-
-ul.requirements li::marker {
-    content: '→';
 }
 
 /*

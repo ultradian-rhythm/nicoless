@@ -10,26 +10,8 @@ error_reporting(E_ALL);
  * Initial 2025-07-16
  */
 
-$assets = [
-    'template/standards.css' => null,
-    'template/main.css' => null,
-    'template/modules.css' => null,
-    'template/mobile.css' => null,
-    'template/pagemap.js' => null,
-];
-
-$feed = [
-    'title' => 'Nico Less',
-    'description' => 'I write about things I do, albums I like and thoughts I have. It’s like a social media feed, but slow and quiet.',
-    'language' => 'en-US',
-    'link' => 'https://nicoless.de',
-    'ttl' => '1440',
-    'file' => 'rss.xml',
-
-    'categories' => [
-        'blog' => 'Blog',
-    ],
-];
+$config = json_decode(file_get_contents('template/config.json'));
+$feed = $config->feed;
 
 /**
  * Helpers
@@ -141,14 +123,18 @@ function getSubpages(object $teaser): array {
  * Build assets
  */
 
-array_map('unlink', array_filter(glob('template/assets/*'), 'is_file'));
+$assets = [];
+$sourceFiles = glob(__DIR__ . "template/*.{css,js}", GLOB_BRACE);
 
-foreach ($assets as $filepath => &$assetpath) {
+array_map('unlink', array_filter(glob("template/assets/*"), 'is_file'));
+
+foreach ($sourceFiles as $filepath) {
+    $assets[$filepath] = null;
     $filemtime = filemtime($filepath);
     $pathinfo = pathinfo($filepath);
-    $assetpath = "template/assets/$pathinfo[filename].$filemtime.$pathinfo[extension]";
+    $path = "template/assets/$pathinfo[filename].$filemtime.$pathinfo[extension]";
 
-    copy($filepath, $assetpath);
+    copy($filepath, $path);
 }
 
 /**
@@ -159,12 +145,12 @@ $components = getComponents('./');
 
 $rss = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"></rss>');
 $channel = $rss->addChild('channel');
-$channel->addChild('title', htmlspecialchars($feed['title']));
-$channel->addChild('link', htmlspecialchars($feed['link']));
-$channel->addChild('description', htmlspecialchars($feed['description']));
-$channel->addChild('language', htmlspecialchars($feed['language']));
+$channel->addChild('title', htmlspecialchars($feed->title));
+$channel->addChild('link', htmlspecialchars($feed->link));
+$channel->addChild('description', htmlspecialchars($feed->description));
+$channel->addChild('language', htmlspecialchars($feed->language));
 $channel->addChild('lastBuildDate', date(DATE_RSS));
-$channel->addChild('ttl', $feed['ttl']);
+$channel->addChild('ttl', $feed->ttl);
 
 foreach ($components as $component) {
     // create static page
@@ -172,15 +158,15 @@ foreach ($components as $component) {
     file_put_contents("$component->path/index.html", $contents);
 
     // add feed entry
-    if (in_array($component->parent ?? null, array_keys($feed['categories']))) {
-        $path = trim($feed['link'], '/') . trim($component->path, '.');
+    if (in_array($component->parent ?? null, array_keys((array) $feed->categories))) {
+        $path = trim($feed->link, '/') . trim($component->path, '.');
 
         $item = $channel->addChild('item');
         $item->addChild('title', htmlspecialchars($component->title));
         $item->addChild('description', htmlspecialchars($component->description));
         $item->addChild('pubDate', date(DATE_RSS, strtotime($component->date)));
         $item->addChild('link', htmlspecialchars($path));
-        $item->addChild('category', htmlspecialchars($feed['categories'][$component->parent]));
+        $item->addChild('category', htmlspecialchars($feed->categories->{$component->parent}));
 
         $image = is_file("$component->path/cover.webp") ? "$path/cover.webp" : false;
 
@@ -193,7 +179,7 @@ foreach ($components as $component) {
     }
 }
 
-file_put_contents($feed['file'], $rss->asXML());
+file_put_contents($feed->file, $rss->asXML());
 
 /**
  * Generate preview

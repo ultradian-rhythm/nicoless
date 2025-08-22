@@ -1,0 +1,14 @@
+{
+    "feed": {
+        "title": "Nico Less",
+        "description": "I write about things I do and albums I like.",
+        "language": "en-US",
+        "link": "https://nicoless.de",
+        "ttl": "1440",
+        "file": "rss.xml",
+    
+        "categories": {
+            "blog": "Blog"
+        }
+    }
+}

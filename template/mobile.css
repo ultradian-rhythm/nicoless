@@ -42,12 +42,16 @@
     }
 
     header nav ul.meta {
-        top: 25px;
-        right: 25px;
+        top: 20px;
+        right: 20px;
     }
 
     header nav ul.meta li {
         margin: 0 0 0 1em;
+    }
+
+    header nav ul.meta li span {
+        display: none;
     }
 
     main {
@@ -55,21 +59,25 @@
     }
 
     div.releases,
-    div.recommendations {
+    div.posts {
         display: block;
     }
 
+    div.releases {
+        margin-top: 0;
+    }
+
     div.releases section,
-    div.recommendations section {
+    div.posts section {
         width: auto;
         margin-bottom: 1.5rem;
     }
 
     section.release {
-        margin-bottom: 3rem;
+        margin-bottom: 1.5rem;
     }
 
-    section.recommendation {
+    section.post {
         margin-bottom: 1.5rem;
     }
 }
