@@ -6,12 +6,10 @@ error_reporting(E_ALL);
 /**
  * Pagemap 3 SSG
  * Copyright 2025, Nico Less (https://nicoless.de)
- * Release 2025-07-16
- * Initial 2025-07-16
+ * Version 2025-09-23
  */
 
 $config = json_decode(file_get_contents('template/config.json'));
-$feed = $config->feed;
 
 /**
  * Helpers
@@ -138,48 +136,60 @@ foreach ($sourceFiles as $filepath) {
 }
 
 /**
- * Build site and feed
+ * Build pages
  */
 
 $components = getComponents('./');
 
-$rss = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"></rss>');
-$channel = $rss->addChild('channel');
-$channel->addChild('title', htmlspecialchars($feed->title));
-$channel->addChild('link', htmlspecialchars($feed->link));
-$channel->addChild('description', htmlspecialchars($feed->description));
-$channel->addChild('language', htmlspecialchars($feed->language));
-$channel->addChild('lastBuildDate', date(DATE_RSS));
-$channel->addChild('ttl', $feed->ttl);
-
 foreach ($components as $component) {
-    // create static page
     $contents = parseTemplate($component);
     file_put_contents("$component->path/index.html", $contents);
-
-    // add feed entry
-    if (in_array($component->parent ?? null, array_keys((array) $feed->categories))) {
-        $path = trim($feed->link, '/') . trim($component->path, '.');
-
-        $item = $channel->addChild('item');
-        $item->addChild('title', htmlspecialchars($component->title));
-        $item->addChild('description', htmlspecialchars($component->description));
-        $item->addChild('pubDate', date(DATE_RSS, strtotime($component->date)));
-        $item->addChild('link', htmlspecialchars($path));
-        $item->addChild('category', htmlspecialchars($feed->categories->{$component->parent}));
-
-        $image = is_file("$component->path/cover.webp") ? "$path/cover.webp" : false;
-
-        if ($image) {
-            $enclosure = $item->addChild('enclosure');
-            $enclosure->addAttribute('url', $image);
-            $enclosure->addAttribute('length', filesize("$component->path/cover.webp"));
-            $enclosure->addAttribute('type', 'image/webp');
-        }
-    }
 }
 
-file_put_contents($feed->file, $rss->asXML());
+/**
+ * Build feeds
+ */
+
+foreach ($config->feeds as $feed) {
+    $rss = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"></rss>');
+    $channel = $rss->addChild('channel');
+    $channel->addChild('title', htmlspecialchars($feed->title));
+    $channel->addChild('link', htmlspecialchars($feed->link));
+    $channel->addChild('description', htmlspecialchars($feed->description));
+    $channel->addChild('language', htmlspecialchars($feed->language));
+    $channel->addChild('lastBuildDate', date(DATE_RSS));
+    $channel->addChild('ttl', $feed->ttl);
+
+    $blogPath = "./$feed->name";
+    $components = getComponents($blogPath);
+
+    foreach ($components as $component) {
+        if (($component->feed ?? false) == $feed->name) {
+            $componentPath = trim($feed->link, '/') . trim($component->path, '.');
+
+            $item = $channel->addChild('item');
+            $item->addChild('title', htmlspecialchars($component->title));
+            $item->addChild('description', htmlspecialchars($component->description));
+            $item->addChild('pubDate', date(DATE_RSS, strtotime($component->date)));
+            $item->addChild('link', htmlspecialchars($componentPath));
+            
+            if ($component->tags ?? false) {
+                foreach (explode(',', $component->tags) as $tag) {
+                    $item->addChild('category', htmlspecialchars(trim($tag)));
+                }
+            }
+
+            if (is_file("$component->path/cover.webp")) {
+                $enclosure = $item->addChild('enclosure');
+                $enclosure->addAttribute('url', "$componentPath/cover.webp");
+                $enclosure->addAttribute('length', filesize("$component->path/cover.webp"));
+                $enclosure->addAttribute('type', 'image/webp');
+            }
+        }
+    }
+    
+    file_put_contents("$blogPath/rss.xml", $rss->asXML());
+}
 
 /**
  * Generate preview

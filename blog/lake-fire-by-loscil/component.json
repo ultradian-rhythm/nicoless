@@ -4,5 +4,6 @@
     "date": "2025-07-15",
     "tags": "Recommendations",
     "template": "main",
-    "parent": "blog"
+    "parent": "blog",
+    "feed": "blog"
 }
