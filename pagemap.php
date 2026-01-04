@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 /**
  * Pagemap 3 SSG
  * Copyright 2025, Nico Less (https://nicoless.de)
- * Version 2025-09-23
+ * Version 2026-01-04
  */
 
 $config = json_decode(file_get_contents('template/config.json'));
@@ -97,10 +97,12 @@ function getSubpages(object $teaser): array {
             $tags = implode(PHP_EOL, array_map(fn($tag) => "<li>$tag</li>", $tags));
         }
 
+        $image = $component->image ?? 'cover.webp';
+
         $contents = [
             '%title%' => $component->title,
             '%description%' => $component->description,
-            '%image%' => "/$component->path/cover.webp",
+            '%image%' => "/$component->path/$image",
             '%path%' => "/$component->path",
             '%date%' => $component->date ?? null,
             '%dateformat%' => $dateformat ?? null,
@@ -179,11 +181,15 @@ foreach ($config->feeds as $feed) {
                 }
             }
 
-            if (is_file("$component->path/cover.webp")) {
+            $image = $component->image ?? 'cover.webp';
+
+            if (is_file("$component->path/$image")) {
+                $imageType = 
+
                 $enclosure = $item->addChild('enclosure');
-                $enclosure->addAttribute('url', "$componentPath/cover.webp");
-                $enclosure->addAttribute('length', filesize("$component->path/cover.webp"));
-                $enclosure->addAttribute('type', 'image/webp');
+                $enclosure->addAttribute('url', "$componentPath/$image");
+                $enclosure->addAttribute('length', filesize("$component->path/$image"));
+                $enclosure->addAttribute('type', mime_content_type("$component->path/$image"));
             }
         }
     }

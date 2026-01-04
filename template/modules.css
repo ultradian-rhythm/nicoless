@@ -160,10 +160,10 @@ section.release figure figcaption small {
 */
 
 div.posts {
-    max-width: 960px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
+    max-width: 640px;
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* gap: 100px; */
     margin: 0 auto;
     width: 100%;
 }
@@ -171,7 +171,6 @@ div.posts {
 div.posts section {
     text-align: left;
     width: 100%;
-    margin-bottom: 0;
 }
 
 div.posts section img {
@@ -180,7 +179,7 @@ div.posts section img {
 }
 
 div.posts section div.teaser {
-    padding: 0.75em 20px;
+    padding: 1.75em 20px;
 }
 
 div.posts section div.teaser h3 {
