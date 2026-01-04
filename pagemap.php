@@ -41,6 +41,7 @@ function parseTemplate(object $data): string {
         '%title%' => $data->title,
         '%description%' => $data->description,
         '%component%' => $data->component,
+        '%path%' => "/$data->path",
     ];
 
     foreach ($assets as $filepath => $assetpath) {
