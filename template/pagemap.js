@@ -27,3 +27,28 @@
         });
     }
 })();
+
+/**
+ * Lightbox
+ */
+(function() {
+    /**
+     * Status: just creates DIV wrapper(s) and <img>
+     * Todo: css for lightbox, close button
+     */
+
+    // document.querySelectorAll('a[href$=".gif"],a[href$=".webp"],a[href$=".jpg"],a[href$=".jpeg"]').forEach(a => {
+    //     a.onclick = event => {
+    //         event.preventDefault();
+            
+    //         const outerWrapper = document.createElement('div');
+    //         const innerWrapper = document.createElement('div');
+            
+    //         const image = document.createElement('img');
+    //         image.src = a.href.replace('/pagemap.php', '');
+            
+    //         outerWrapper.appendChild(innerWrapper).appendChild(image);
+    //         document.body.appendChild(outerWrapper);
+    //     }
+    // });
+})();
