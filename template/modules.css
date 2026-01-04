@@ -90,7 +90,7 @@ ul.listen li a:hover {
 */
 
 ul.tags {
-    margin: 0 0 0.5rem;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
@@ -103,9 +103,9 @@ ul.tags li {
     color: var(--font-color-context);
 }
 
-ul.tags li:before {
+/* ul.tags li:before {
     content: '#';
-}
+} */
 
 /*
     Releases
