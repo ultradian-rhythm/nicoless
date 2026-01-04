@@ -211,6 +211,7 @@ figure {
     margin: 0;
 }
 
+video,
 figure img {
     width: 100%;
     height: auto;

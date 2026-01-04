@@ -173,7 +173,8 @@ div.posts section {
     width: 100%;
 }
 
-div.posts section img {
+div.posts section img,
+div.posts section video {
     max-width: 100%;
     border-radius: 5px;
 }
@@ -206,6 +207,10 @@ div.posts section div.teaser time {
 
 section.post {
     max-width: 640px;
+}
+
+section.post h1 {
+    text-align: left;
 }
 
 section.post p {
