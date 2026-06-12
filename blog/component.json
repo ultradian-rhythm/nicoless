@@ -1,0 +1,11 @@
+{
+    "title": "Nico Less — Blog",
+    "description": "I write about albums I like.",
+    "template": "main",
+    
+    "teaser": {
+        "path": "blog",
+        "template": "blog-teaser",
+        "dateFormat": "dd. MMM. yyyy"
+    }
+}

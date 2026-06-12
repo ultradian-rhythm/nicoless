@@ -1,0 +1,217 @@
+<?php
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+/**
+ * Pagemap 3 SSG
+ * Copyright 2025, Nico Less (https://nicoless.de)
+ * Version 2026-06-01
+ */
+
+$config = json_decode(file_get_contents('template/config.json'));
+
+/**
+ * Helpers
+ */
+
+function parseTemplate(object $data): string {
+    global $assets;
+
+    $template = file_get_contents("./template/$data->template.html");
+
+    if (file_exists("$data->path/component.css")) {
+        $template = preg_replace(
+            '/(<head.*?>.*?)(<link\b)/is',
+            '$1<link rel="stylesheet" href="component.css">$2',
+            $template
+        );
+    }
+
+    if (isset($data->teaser)) {
+        $data->component = str_replace(
+            '%teaser%',
+            implode(PHP_EOL, getSubpages($data->teaser)),
+            $data->component
+        );
+    }
+
+    $contents = [
+        '%robots%' => $data->robots ?? 'index, follow',
+        '%title%' => $data->title,
+        '%description%' => $data->description,
+        '%component%' => $data->component,
+        '%path%' => "/$data->path",
+        '%mainClass%' => $data->mainClass ?? null,
+    ];
+
+    foreach ($assets as $filepath => $assetpath) {
+        $template = str_replace($filepath, $assetpath, $template);
+    }
+
+    return str_replace(
+        array_keys($contents),
+        array_values($contents),
+        $template
+    );
+}
+
+function getComponents(string $path, string|null $parent = null): array {
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
+
+    foreach ($iterator as $file) {
+        if ($file->isFile() && $file->getFilename() == 'component.json') {
+            $contents = file_get_contents($file->getPathname());
+            $data = json_decode($contents);
+
+            $data->path = $file->getPath();
+            $data->component = file_get_contents("$data->path/component.html");
+
+            if ($parent && ($data->parent ?? null) != $parent) {
+                continue;
+            }
+            
+            $components[] = $data;
+        }
+    }
+
+    return $components ?? [];
+}
+
+function getSubpages(object $teaser): array {
+    $components = getComponents($teaser->path, $teaser->path);
+    $template = file_get_contents("./template/components/$teaser->template.html");
+
+    usort($components, function($a, $b) {
+        return strtotime($b->date ?? '') <=> strtotime($a->date ?? '');
+    });
+
+    foreach ($components as $component) {
+        if ($component->date ?? false) {
+            $dateformat = (new IntlDateFormatter('en_US', 0, 0, null, null, $teaser->dateFormat))->format(new DateTime($component->date));
+        }
+
+        if ($component->tags ?? false) {
+            $tags = array_map('trim', explode(',', $component->tags));
+            $tags = implode(PHP_EOL, array_map(fn($tag) => "<li>$tag</li>", $tags));
+        }
+
+        $cover = $component->cover ?? 'cover.webp';
+
+        $contents = [
+            '%title%' => $component->title,
+            '%description%' => $component->description,
+            '%cover%' => "/$component->path/$cover",
+            '%path%' => "/$component->path",
+            '%date%' => $component->date ?? null,
+            '%dateformat%' => $dateformat ?? null,
+            '%tags%' => $tags ?? null,
+            '%mainClass%' => $component->mainClass ?? null,
+        ];
+    
+        $subpages[] = str_replace(
+            array_keys($contents),
+            array_values($contents),
+            $template
+        );
+    }
+
+    return $subpages ?? [];
+}
+
+/**
+ * Build assets
+ */
+
+$assets = [];
+$sourceFiles = glob(__DIR__ . "template/*.{css,js}", GLOB_BRACE);
+
+array_map('unlink', array_filter(glob("template/assets/*"), 'is_file'));
+
+foreach ($sourceFiles as $filepath) {
+    $assets[$filepath] = null;
+    $filemtime = filemtime($filepath);
+    $pathinfo = pathinfo($filepath);
+    $path = "template/assets/$pathinfo[filename].$filemtime.$pathinfo[extension]";
+
+    copy($filepath, $path);
+}
+
+/**
+ * Build pages
+ */
+
+$components = getComponents('./');
+
+foreach ($components as $component) {
+    $contents = parseTemplate($component);
+    file_put_contents("$component->path/index.html", $contents);
+}
+
+/**
+ * Build feeds
+ */
+
+foreach ($config->feeds as $feed) {
+    $rss = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"></rss>');
+    $channel = $rss->addChild('channel');
+    $channel->addChild('title', htmlspecialchars($feed->title));
+    $channel->addChild('link', htmlspecialchars($feed->link));
+    $channel->addChild('description', htmlspecialchars($feed->description));
+    $channel->addChild('language', htmlspecialchars($feed->language));
+    $channel->addChild('lastBuildDate', date(DATE_RSS));
+    $channel->addChild('ttl', $feed->ttl);
+
+    $blogPath = "./$feed->name";
+    $components = getComponents($blogPath);
+
+    foreach ($components as $component) {
+        if (($component->feed ?? false) == $feed->name) {
+            $componentPath = trim($feed->link, '/') . trim($component->path, '.');
+
+            $item = $channel->addChild('item');
+            $item->addChild('title', htmlspecialchars($component->title));
+            $item->addChild('description', htmlspecialchars($component->description));
+            $item->addChild('pubDate', date(DATE_RSS, strtotime($component->date)));
+            $item->addChild('link', htmlspecialchars($componentPath));
+            
+            if ($component->tags ?? false) {
+                foreach (explode(',', $component->tags) as $tag) {
+                    $item->addChild('category', htmlspecialchars(trim($tag)));
+                }
+            }
+
+            $cover = $component->cover ?? 'cover.webp';
+
+            if (is_file("$component->path/$cover")) {
+                $enclosure = $item->addChild('enclosure');
+                $enclosure->addAttribute('url', "$componentPath/$cover");
+                $enclosure->addAttribute('length', filesize("$component->path/$cover"));
+                $enclosure->addAttribute('type', mime_content_type("$component->path/$cover"));
+            }
+        }
+    }
+    
+    file_put_contents("$blogPath/rss.xml", $rss->asXML());
+}
+
+/**
+ * Generate preview
+ */
+
+$page = trim(substr($_SERVER['REQUEST_URI'], strlen($_SERVER['SCRIPT_NAME'])), '/');
+
+if (is_file($page)) {
+    header("location: /$page");
+}
+
+$html = file_get_contents("./$page/index.html");
+$html = preg_replace('/href="component\.css"/i', 'href="/' . $page . '/component.css"', $html);
+$html = preg_replace('/src="(?!http|\/)([^"]+)"/i', 'src="/' . $page . '/$1"', $html);
+
+exit($html);
+
+?>
