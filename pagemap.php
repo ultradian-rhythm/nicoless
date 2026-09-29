@@ -1,15 +1,15 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 /**
- * Pagemap 3 SSG
- * Copyright 2025, Nico Less (https://nicoless.de)
- * Version 2026-06-01
+ * Pagemap 3 (SSG)
+ * Copyright 2025-2026, Nico Less (https://nicoless.de)
+ * Updated 2026-06-28
  */
 
-$config = json_decode(file_get_contents('template/config.json'));
+$config =  json_decode(json_encode(require 'config.php')); // return recursive object
+
+ini_set('display_errors', $config->app->showErrors ? 1 : 0);
+error_reporting($config->app->showErrors ? -1 : 0);
 
 /**
  * Helpers
@@ -42,18 +42,20 @@ function parseTemplate(object $data): string {
         '%description%' => $data->description,
         '%component%' => $data->component,
         '%path%' => "/$data->path",
-        '%mainClass%' => $data->mainClass ?? null,
+        '%class%' => $data->class ?? null,
     ];
 
     foreach ($assets as $filepath => $assetpath) {
         $template = str_replace($filepath, $assetpath, $template);
     }
 
-    return str_replace(
+    $template = str_replace(
         array_keys($contents),
         array_values($contents),
         $template
     );
+
+    return $template;
 }
 
 function getComponents(string $path, string|null $parent = null): array {
@@ -109,7 +111,7 @@ function getSubpages(object $teaser): array {
             '%date%' => $component->date ?? null,
             '%dateformat%' => $dateformat ?? null,
             '%tags%' => $tags ?? null,
-            '%mainClass%' => $component->mainClass ?? null,
+            '%class%' => $component->class ?? null,
         ];
     
         $subpages[] = str_replace(
@@ -148,6 +150,8 @@ $components = getComponents('./');
 
 foreach ($components as $component) {
     $contents = parseTemplate($component);
+    $contents = preg_replace('/<!--.*?-->/s', '', $contents);
+
     file_put_contents("$component->path/index.html", $contents);
 }
 
@@ -212,6 +216,6 @@ $html = file_get_contents("./$page/index.html");
 $html = preg_replace('/href="component\.css"/i', 'href="/' . $page . '/component.css"', $html);
 $html = preg_replace('/src="(?!http|\/)([^"]+)"/i', 'src="/' . $page . '/$1"', $html);
 
-exit($html);
+echo $html;
 
 ?>

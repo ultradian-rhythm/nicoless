@@ -1,6 +1,6 @@
 {
     "title": "Nico Less — Hello",
-    "description": "I’m Nico, living in northern Germany, creating quiet music and looping visuals.",
+    "description": "",
     "template": "main",
-    "mainClass": "alternate"
+    "class": "index"
 }

@@ -1,10 +1,103 @@
-@media screen and (max-width: 768px) {
-    main {
-        padding: 25px;
+@media screen and (max-width: 1024px) {
+    :root {
+        --padding: 25px;
     }
 
-    main.alternate {
+    header {
+        z-index: 10;
+        top: 0;
+        left: 0;
+        width: 75px;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        transition: height 0.3s ease-in-out;
+        overflow: hidden;
+        padding: 0;
+        border-bottom-right-radius: var(--border-radius);
+        font-size: 1.15em;
+    }
+
+    header.active {
+        width: 100vw;
+        max-width: 100vw;
+        height: auto;
+        min-height: 100vh;
+        padding: 0 25px 25px 100px;
+        overflow-y: auto;
+    }
+
+    header button {
+        position: absolute;
+        z-index: 1;
+        top: 25px;
+        display: block;
+    }
+
+    header nav {
+        height: 4.5rem;
+        overflow: hidden;
+        padding-top: 75px;
+    }
+
+    header.active nav {
+        height: auto;
+        padding-right: 75px;
+    }
+
+    header nav div#name {
+        display: none;
+    }
+
+    header nav.active ul {
+        display: block;
+        margin-left: 100px;
+        padding-bottom: 25px;
+    }
+
+    main {
+        max-height: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 25px;
+        overflow: visible;
+    }
+
+    div.block {
+        padding: 0;
+    }
+
+    main.index {
         padding-left: 0;
+    }
+
+    div.content {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    div.columns {
+        display: block;
+    }
+
+    div.columns > div {
+        width: 100%;
+        max-height: none;
+        padding: 0;
+        overflow: visible;
+    }
+
+    div.columns div.cover figure {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+        margin-left: 0;
+    }
+
+    div.columns div.content {
+        padding: var(--padding);
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
     div.releases,
@@ -14,61 +107,42 @@
 
     div.releases {
         margin-top: 0;
+        padding-top: 0;
     }
 
-    div.releases section,
-    div.posts section {
-        width: auto;
-        margin-bottom: 1.5rem;
-    }
-
-    div.releases section a span.title {
+    div.releases a span.title {
         position: static;
         transform: rotate(0deg);
         text-align: right;
         font-size: 0.75em;;
     }
 
-    section.release {
-        margin-bottom: 1.5rem;
+    div.posts {
+        max-width: auto;
+        margin: 0;
+        padding-top: 0;
     }
 
-    section.post {
-        margin-bottom: 1.5rem;
-    }
-}
-
-@media screen and (max-height: 400px) {
-    header nav button {
-        display: block;
+    div.post {
+        padding-top: 0;
     }
 
-    header {
-        position: fixed;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        width: 50px;
-        height: 200px;
-        transform: rotate(0);
-        padding-top: 50px;
-        padding-left: 1rem;
+    div.video-background video {
+        transform: scale(2);
     }
 
-    header.active {
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
+    h1 {
+        /* margin: 0 0 0.5rem 0; */
+        font-size: 1.5rem;
     }
 
-    header.active nav ul {
-        display: block;
-        margin-left: 100px;
+    h2 {
+        /* margin: 0 0 0.75em 0; */
+        font-size: 1.25rem;
     }
 
-    header nav ul {
-        display: none;
-        
+
+    h3:not(:first-of-type) {
+        margin-top: 0;
     }
 }

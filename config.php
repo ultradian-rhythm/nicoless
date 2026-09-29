@@ -1,0 +1,18 @@
+<?php
+
+return [
+    "app" => [
+        'showErrors' => 1,
+    ],
+
+    "feeds" => [
+        [
+            "name" => "blog",
+            "title" => "Nico Less",
+            "description" => "I write about things I do and albums I like.",
+            "language" => "en-US",
+            "link" => "https://nicoless.de",
+            "ttl" => "1440",
+        ]
+    ]
+];
