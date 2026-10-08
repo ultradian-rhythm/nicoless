@@ -35,14 +35,11 @@
     document.querySelectorAll('.typewriter').forEach(element => {
         const text = element.innerHTML;
         element.innerHTML = '';
-        element.title = 'I don’t know what to write here …';
 
         for (let i = 0; i < text.length; i++) {
             window.setTimeout(() => {
                 element.innerHTML += text[i];
             }, 20 * i);
         }
-
-        console.log(text)
     });
 })();
